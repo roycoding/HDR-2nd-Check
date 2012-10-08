@@ -37,7 +37,7 @@ while 1:  # do forever, until we find acceptable values and break out
         # show the box again, with the errmsg as the message    
         fieldValues = eg.multenterbox(errmsg, title, fieldNames, fieldValues)
        
-msg ="Select BracyVision QAExport Report text file."
+msg ="Select BrachyVision QAExport Report text file."
 title = "HDR file import"
 default = "X:\radiation/HDR_BrachyVision_Plans"
 filename = eg.fileopenbox(msg, title, default)
@@ -45,7 +45,7 @@ filename = eg.fileopenbox(msg, title, default)
 while filename is None:
     eg.msgbox("Please choose another file!", "File error!")
     
-    msg ="Select BracyVision QAExport Report text file."
+    msg ="Select BrachyVision QAExport Report text file."
     title = "HDR file import"
     default = "X:\radiation/HDR_BrachyVision_Plans"
     filename = eg.fileopenbox(msg, title, default)
