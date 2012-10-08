@@ -1,4 +1,4 @@
-# hdrcheck2.py
+# hdrcheckgui.py
 
 # GUI for hdrcheck.py.
 # Should allow you to select data file, input target x,y,z and expected dose,
