@@ -10,6 +10,7 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.units import inch
 from reportlab.platypus import Paragraph, SimpleDocTemplate,Spacer
 from reportlab.pdfgen.canvas import Canvas
+from math import ceil
 
 # def result2pdf(result,reportfilename):
     # '''Write HDR 2nd check output to a PDF report.
@@ -28,14 +29,49 @@ from reportlab.pdfgen.canvas import Canvas
     
 def result2pdf(result,reportfilename):
     '''Write HDR 2nd check output to a PDF report.
-    Input: list of strings (report text) and output file name.'''
+    Input: list of strings (report text).'''
+    
+    # Lines per page
+    lpp = 48
+    # Pages needed in report
+    pages = ceil(len(result)/float(lpp))
+    print '# of pages:',pages
     
     pdf = Canvas(reportfilename, pagesize = letter)
     report = pdf.beginText(inch * 1, inch * 10)
     
-    for line in result:
-        report.textLine(line)
+    # Single page report
+    if len(result) < lpp:
+
+        for line in result:
+            report.textLine(line)
     
-    pdf.drawText(report)
-    pdf.showPage()
+        pdf.drawText(report)
+        pdf.showPage()
+
+    # Or create a multi-page report
+    else:
+        page = 1
+        l = 0
+        while page < pages:
+            # Reset page contents
+            report = pdf.beginText(inch * 1, inch * 10)
+        
+            while l < lpp*page:
+                print 'l:',l
+                report.textLine(result[l])
+                l += 1
+            pdf.drawText(report)
+            pdf.showPage()
+            page += 1
+        
+        # Print last page
+        # Reset page contents
+        report = pdf.beginText(inch * 1, inch * 10)
+        for line in result[int(pages-1)*lpp:]:
+            report.textLine(line)
+    
+        pdf.drawText(report)
+        pdf.showPage()
+        
     pdf.save()
